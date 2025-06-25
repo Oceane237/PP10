@@ -56,8 +56,11 @@ In this exercise you will:
 #### Reflection Questions
 
 1. **What does `typedef struct { ... } Point;` achieve compared to `struct Point { ... };`?**
-2. **How does the compiler lay out a `Point` in memory?**
+<summary>typedef struct { ... } Point :Allows you to use Point directly <summary>
+<summary>struct Point { ... } : Requires using struct Point when declaring variables.</summary>
 
+2. **How does the compiler lay out a `Point` in memory?**
+<summary>The Point struct is tightly packed with x followed by y in memory, using 16 bytes total.</summary>
 ---
 
 ### Task 1: Linking the Math Library (`-lm`)
@@ -74,7 +77,10 @@ In this exercise you will:
 #### Reflection Questions
 
 1. **Why is the `-lm` flag necessary to resolve `sqrt`?**
+<summary>Because sqrt are defined in maths librairy. The -lm tells the linker to link against libm, which is a separate library from the standard C library.</summary>
+
 2. **What happens if you omit `-lm` when calling math functions?**
+<summary>You will get an error because the compiler found the declaration (from <math.h>), but the linker couldn’t find the actual implementation of sqrt</summary>
 
 ---
 
@@ -105,7 +111,12 @@ In this exercise you will:
 #### Reflection Questions
 
 1. **What are the advantages and drawbacks of a header-only library?**
+<summary>Advantages: simplicity in usage , no linker error for missing symbols</summary>
+<summary>Drawbacks: longer compile time,code duplication</summary>
+
 2. **How does `static inline` affect linkage and code size?**
+<summary>Static inline allow that each file gets its own copy</summary>
+<summary>increase binary size if inlining isn't optimized away</summary>
 
 ---
 
@@ -129,7 +140,11 @@ In this exercise you will:
 #### Reflection Questions
 
 1. **Why must you include `solutions/util.o` when linking instead of just the header?**
+<summary> Including solutions/util.o gives the linker the missing function body, satisfying that symbol.</summary>
+
 2. **What symbol resolution occurs at compile vs. link time?**
+<summary>At compile the symbole util.h</summary>
+<summary>at link time the symbole util.o</summary>
 
 ---
 
@@ -160,8 +175,11 @@ In this exercise you will:
 #### Reflection Questions
 
 1. **How does `ar` create an archive, and how does the linker find `-lutil`?**
-2. **What is the purpose of `ldconfig`?**
+<summary>ar Creates static libraries </summary>
+<summary>lutil	Tells the linker to use libutil.a</summary>
 
+2. **What is the purpose of `ldconfig`?**
+<summary>ldconfig updates dynamic linker cache for share libs</summary>
 ---
 
 ### Task 5: Installing and Using `jansson`
@@ -197,8 +215,10 @@ In this exercise you will:
 #### Reflection Questions
 
 1. **What files does `libjansson-dev` install, and where?**
-2. **How does the linker know where to find `-ljansson`?**
+<summary>libjansson-dev install hearder and libraries . They are  placed in standard system directories.</summary>
 
+2. **How does the linker know where to find `-ljansson`?**
+<summary>The linker finds -ljansson by searching default library paths</summary>
 ---
 
 ### Task 6: Building and Installing a GitHub Library
@@ -230,8 +250,15 @@ In this exercise you will:
 #### Reflection Questions
 
 1. **What does `make install` do, and how does `PREFIX` affect installation paths?**
-2. **How can you inspect a library’s exported symbols to verify installation?**
+<summary>The make install command copies built files to system directories to make them available system-wide.</summary>
+<summary>The PREFIX variable lets you change the base installation path.</summary> 
 
+2. **How can you inspect a library’s exported symbols to verify installation?**
+<summary> By using :  </summary>
+
+  ```bash
+nm -D --defined-only libmylib.so
+```
 ---
 
 **Remember:** Stop after **90 minutes** and record where you stopped.
